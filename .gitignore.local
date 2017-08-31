@@ -10,6 +10,3 @@ target/
 
 # Perl local library
 local/
-
-.vim/bundle/*
-!.vim/bundle/Vundle.vim

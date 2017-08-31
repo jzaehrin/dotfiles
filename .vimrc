@@ -32,7 +32,7 @@ filetype plugin indent on
 " --- Setup colorscheme ---
 syntax on
 set number
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+set guifont=Ubuntu\ Mono\ derivative\ Powerline:h15
 set guioptions-=T
 set background=dark
 colorscheme jellybeans

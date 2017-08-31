@@ -1,0 +1,2 @@
+#ssh auth from vault
+ssh-add -K ~/.ssh/id_ecdsa

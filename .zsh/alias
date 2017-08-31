@@ -1,0 +1,8 @@
+export LS_OPTIONS='--color=auto'
+eval "`dircolors`"
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+alias wtlfq='function _wtlf(){ while [ true ]; do lsof -i :$1; echo -n "*"; sleep 5; done };_wtlf'
+alias wtlf='function _wtlf(){ while [ true ]; do for port in "$@"; do echo "$port: *"; lsof -i :$port; done; echo -e "\n-"; /bin/date; echo -e "-\n"; sleep 5; done };_wtlf'
