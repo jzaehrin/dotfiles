@@ -9,7 +9,11 @@ export ZSH_HOME=/Users/jzaehrin/.zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="amuse"
+#ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(anaconda status time)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -31,7 +35,7 @@ ZSH_THEME="amuse"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -53,7 +57,13 @@ ZSH_THEME="amuse"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    sudo
+    zsh-autosuggestions
+    zsh-completions
+    docker
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -89,3 +99,56 @@ source $ZSH/oh-my-zsh.sh
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 for f in $ZSH_HOME/*; do source $f; done
+
+alias zshrc="mvim ~/.zshrc"
+alias ohmyzsh="mvim ~/.oh-my-zsh"
+
+alias gpp='g++ -std=c++11 -Wall -Wconversion -Wextra -pedantic'
+alias gc='gcc -std=c11 -Wall -Wconversion -Wextra -pedantic'
+alias py='python3'
+
+alias powershell='docker run --rm -v /Users/jzaehrin/Google_Drive/06_HES/ADS/PowerShell:/home/host -it microsoft/powershell'
+alias ubuntu='docker run -p 6080:80 -e USER=jzaehrin -e PASSWORD=pass -v /Users/jzaehrin/Google_Drive/06_HES/ADS:/home/jzaehrin/ADS dorowu/ubuntu-desktop-lxde-vnc:xenial'
+alias ads-up='VBoxManage startvm "ads" --type headless'
+alias ads-down='VBoxManage controlvm "ads" acpipowerbutton'
+alias ads='ssh 127.0.0.1 -p2224'
+
+alias sos-up='VBoxManage startvm "centos7" --type headless'
+alias sos-down='VBoxManage controlvm "centos7" acpipowerbutton'
+alias sos='ssh student@127.0.0.1 -p2223'
+
+export PATH="$PATH:/usr/local/gcc_arm/gcc-arm-none-eabi-7-2018-q2-update/bin/"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="/usr/local/opt/qt/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+export PAT=$PATH:/opt/metasploit-framework/bin
+export PATH=$PATH:/opt/metasploit-framework/bin
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk"
+
+autoload -U compinit && compinit
+autoload -Uz promptinit
+export DEFAULT_USER="$USER"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/jzaehrin/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/jzaehrin/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/jzaehrin/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/jzaehrin/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+promptinit

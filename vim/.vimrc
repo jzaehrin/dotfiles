@@ -9,7 +9,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'mhinz/vim-startify'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'mbbill/undotree'
@@ -23,8 +23,21 @@ Plugin 'pbrisbin/vim-mkdir'
 Plugin 'sickill/vim-pasta'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-eunuch'
-Plugin 'w0rp/ale'
+"Plugin 'w0rp/ale'
+Plugin 'c.vim'
+Plugin 'valloric/youcompleteme'
 "Plugin 'Valloric/YouCompleteMe'
+Plugin 'posva/vim-vue'
+
+
+" --- YouCompleteMe ---
+let g:ycm_min_num_of_chars_for_completion = 1
+
+let g:ycm_confirm_extra_conf = 1
+let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
+
+
 
 call vundle#end()
 filetype plugin indent on
@@ -59,6 +72,11 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_c_checkers = [ 'make' ]
 let g:syntastic_c_compiler = 'clang'
 
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_checkers = [ 'clang++' ]
+let g:syntastic_cpp_compiler = "g++"
+let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
+
 let g:syntastic_mode_map = {
             \ "mode": "active",
             \ "passive_filetypes": [ "perl", "scala" ] }
@@ -77,8 +95,17 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\v[\/](target|build)$'
   \ }
 
+" --- Python ---
+let g:ycm_python_interpreter_path = '/Library/Frameworks/Python.framework/Versions/3.7/bin/python3'
+let g:ycm_python_binary_path = '/Library/Frameworks/Python.framework/Versions/3.7/bin/python3'
+let g:syntastic_python_checkers = [ 'python3' ]
+
+
 " --- Setup Mojolicious ---
 let mojo_highlight_data = 1
+
+" --- Setup c.vim ---
+let C_UseTool_cmake = 'yes'
 
 " --- Whitespace ---
 set nowrap
@@ -114,44 +141,48 @@ end
 
 nnoremap <C-Left> :bprevious<CR>
 nnoremap <C-Right> :bnext<CR>
-"=====[ Configure ALE for error tracking ]==================
-" You also need to install the following:  https://github.com/w0rp/ale
-
-highlight AleError    ctermfg=red     cterm=bold
-highlight AleWarning  ctermfg=magenta cterm=bold
-
-augroup ALE_Autoconfig
-	au!
-	autocmd User GVI_Start  silent call Stop_ALE()
-	autocmd User PV_Start   silent call Stop_ALE()
-	autocmd User PV_End     silent call Start_ALE()
-augroup END
-
-" let g:ale_sign_column_always   = 1
-let g:ale_set_loclist          = 0
-let g:ale_set_quickfix         = 1
-let g:ale_linters              = { 'perl': ['perl'] }
-let g:ale_perl_perl_executable = 'perl'
-let g:ale_perl_perl_options    = '-cw -Ilib'
-
-nmap <silent> ;m [Toggle automake on Perl files] :call Toggle_ALE()<CR>
-
-function! Start_ALE ()
-	ALEEnable
-endfunction
-
-function! Stop_ALE ()
-	silent call s:ChangeProfile(&filetype)
-	ALEDisable
-	call setqflist([])
-	redraw!
-endfunction
-
-function! Toggle_ALE ()
-	if g:ale_enabled
-		call Stop_ALE()
-	else
-		call Start_ALE()
-	endif
-	echo 'Error highlighting ' . (g:ale_enabled ? 'on' : 'off')
-endfunction
+"" =====[ Configure ALE for error tracking ]==================
+"" You also need to install the following:  https://github.com/w0rp/ale
+"
+"highlight AleError    ctermfg=red     cterm=bold
+"highlight AleWarning  ctermfg=magenta cterm=bold
+"
+"augroup ALE_Autoconfig
+"	au!
+"	autocmd User GVI_Start  silent call Stop_ALE()
+"	autocmd User PV_Start   silent call Stop_ALE()
+"	autocmd User PV_End     silent call Start_ALE()
+"augroup END
+"
+"" let g:ale_sign_column_always   = 1
+"let g:ale_completion_enabled     = 1
+"let g:airline#extensions#ale#enabled = 1
+"let g:ale_set_loclist          = 0
+"let g:ale_set_quickfix         = 1
+"" let g:ale_cpp_gcc_options      = '-Wall'
+"let g:ale_cpp_gcc_options      = '-Wall -std=c++11'
+"let g:ale_linters              = { 'perl': ['perl'] }
+"let g:ale_perl_perl_executable = 'perl'
+"let g:ale_perl_perl_options    = '-cw -Ilib'
+"
+"nmap <silent> ;m [Toggle automake on Perl files] :call Toggle_ALE()<CR>
+"
+"function! Start_ALE ()
+"	ALEEnable
+"endfunction
+"
+"function! Stop_ALE ()
+"	silent call s:ChangeProfile(&filetype)
+"	ALEDisable
+"	call setqflist([])
+"	redraw!
+"endfunction
+"
+"function! Toggle_ALE ()
+"	if g:ale_enabled
+"		call Stop_ALE()
+"	else
+"		call Start_ALE()
+"	endif
+"	echo 'Error highlighting ' . (g:ale_enabled ? 'on' : 'off')
+"endfunction
