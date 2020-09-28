@@ -10,3 +10,6 @@ target/
 
 # Perl local library
 local/
+
+# vscode folder
+.vscode
